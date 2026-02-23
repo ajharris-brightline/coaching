@@ -1,0 +1,1538 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Brightline | Unified Care Initiative</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,opsz,wght@0,8..60,300;0,8..60,400;0,8..60,600;0,8..60,700;1,8..60,300;1,8..60,400&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --pine:#004E68; --pine-mid:#006080; --pine-light:#E0EEF3;
+  --orange:#FFA301; --orange-mid:#FF7024; --orange-light:#FFF3D6;
+  --sun:#FFE415; --sun-light:#FFFBD6;
+  --sea:#5CC8B4; --sea-light:#E4F7F3;
+  --grape:#6B4FA0; --grape-light:#EEE8F8;
+  --marigold:#F6AE5B; --marigold-light:#FEF3E2;
+  --periwinkle:#AFC0FA; --periwinkle-deep:#2C333F;
+  --offwhite:#F8FAF4; --white:#FFFFFF;
+  --ink:#1A2320; --mid:#4A5568; --soft:#8A9499;
+  --border:#E4E8E0;
+  --alert:#E05C6B; --alert-bg:#FDE8EB;
+  --positive:#2E9E6A; --positive-bg:#E6F5EE;
+}
+
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{
+  font-family:'DM Sans',sans-serif;
+  background:var(--offwhite);
+  color:var(--ink);
+  font-size:15px;
+  line-height:1.6;
+  overflow-x:hidden;
+}
+::-webkit-scrollbar{width:6px}
+::-webkit-scrollbar-thumb{background:#C8D4CC;border-radius:6px}
+
+/* ── ANIMATIONS ─────────────────────── */
+@keyframes fadeUp {
+  from{opacity:0;transform:translateY(28px)}
+  to{opacity:1;transform:translateY(0)}
+}
+@keyframes fadeIn {
+  from{opacity:0} to{opacity:1}
+}
+@keyframes float {
+  0%,100%{transform:translateY(0)} 50%{transform:translateY(-8px)}
+}
+@keyframes spin {
+  from{transform:rotate(0deg)} to{transform:rotate(360deg)}
+}
+@keyframes pulse {
+  0%,100%{opacity:1} 50%{opacity:.5}
+}
+@keyframes growBar {
+  from{width:0} to{width:var(--target-w)}
+}
+@keyframes countUp {
+  from{opacity:0;transform:scale(.8)} to{opacity:1;transform:scale(1)}
+}
+
+.fade-up { animation: fadeUp .7s ease both; }
+.fade-up-2 { animation: fadeUp .7s .15s ease both; }
+.fade-up-3 { animation: fadeUp .7s .3s ease both; }
+.fade-up-4 { animation: fadeUp .7s .45s ease both; }
+
+/* ── HERO ───────────────────────────── */
+.hero {
+  background: var(--pine);
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  padding: 80px 40px;
+  position: relative;
+  overflow: hidden;
+}
+.hero-bg {
+  position: absolute; inset: 0;
+  pointer-events: none;
+  overflow: hidden;
+}
+/* sunburst ring large */
+.sunburst {
+  position: absolute;
+  border-radius: 50%;
+}
+.hero-content {
+  position: relative;
+  z-index: 2;
+  max-width: 780px;
+}
+.hero-eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(255,255,255,.1);
+  border: 1px solid rgba(255,255,255,.15);
+  border-radius: 30px;
+  padding: 6px 16px;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: .8px;
+  text-transform: uppercase;
+  color: var(--orange);
+  margin-bottom: 24px;
+}
+.hero-eyebrow-dot {
+  width: 7px; height: 7px;
+  background: var(--orange);
+  border-radius: 50%;
+  animation: pulse 2s infinite;
+}
+.hero-title {
+  font-family: 'Source Serif 4', serif;
+  font-size: clamp(36px, 6vw, 64px);
+  font-weight: 600;
+  color: white;
+  line-height: 1.1;
+  letter-spacing: -1px;
+  margin-bottom: 20px;
+}
+.hero-title em {
+  font-style: italic;
+  color: var(--orange);
+}
+.hero-subtitle {
+  font-size: clamp(15px, 2vw, 18px);
+  color: rgba(255,255,255,.7);
+  max-width: 560px;
+  margin: 0 auto 40px;
+  line-height: 1.7;
+  font-weight: 300;
+}
+.hero-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: var(--orange);
+  color: var(--periwinkle-deep);
+  border: none;
+  border-radius: 30px;
+  padding: 14px 28px;
+  font-size: 15px;
+  font-weight: 700;
+  cursor: pointer;
+  font-family: inherit;
+  transition: transform .2s, box-shadow .2s;
+  text-decoration: none;
+}
+.hero-cta:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(255,163,1,.4);
+}
+.hero-scroll-hint {
+  position: absolute;
+  bottom: 32px;
+  left: 50%;
+  transform: translateX(-50%);
+  color: rgba(255,255,255,.4);
+  font-size: 12px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  animation: fadeIn 2s 1.5s both;
+}
+.scroll-arrow {
+  width: 20px; height: 20px;
+  border-right: 2px solid rgba(255,255,255,.3);
+  border-bottom: 2px solid rgba(255,255,255,.3);
+  transform: rotate(45deg);
+  animation: float 2s infinite;
+}
+
+/* ── NAV ────────────────────────────── */
+.sticky-nav {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: var(--pine);
+  border-bottom: 1px solid rgba(255,255,255,.1);
+  display: flex;
+  align-items: center;
+  gap: 0;
+  padding: 0 40px;
+  overflow-x: auto;
+}
+.nav-item {
+  padding: 14px 18px;
+  font-size: 13px;
+  font-weight: 500;
+  color: rgba(255,255,255,.55);
+  cursor: pointer;
+  border-bottom: 2px solid transparent;
+  transition: all .15s;
+  white-space: nowrap;
+  text-decoration: none;
+  display: block;
+}
+.nav-item:hover { color: white; }
+.nav-item.active { color: var(--orange); border-bottom-color: var(--orange); font-weight: 600; }
+.nav-logo {
+  font-family: 'Source Serif 4', serif;
+  font-size: 18px;
+  color: white;
+  font-weight: 600;
+  margin-right: 24px;
+  white-space: nowrap;
+  display: flex;
+  align-items: center;
+  gap: 7px;
+}
+.nav-dot { width: 8px; height: 8px; background: var(--orange); border-radius: 50%; }
+
+/* ── SECTION BASE ───────────────────── */
+.section {
+  padding: 80px 40px;
+  max-width: 1100px;
+  margin: 0 auto;
+}
+.section-full {
+  padding: 80px 40px;
+}
+.section-eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  margin-bottom: 12px;
+}
+.eyebrow-line {
+  width: 28px; height: 2px;
+  border-radius: 2px;
+}
+.section-title {
+  font-family: 'Source Serif 4', serif;
+  font-size: clamp(28px, 4vw, 42px);
+  font-weight: 600;
+  line-height: 1.15;
+  letter-spacing: -.5px;
+  margin-bottom: 16px;
+}
+.section-sub {
+  font-size: 16px;
+  color: var(--mid);
+  max-width: 600px;
+  line-height: 1.7;
+  font-weight: 300;
+  margin-bottom: 52px;
+}
+
+/* ── PROBLEM SECTION ────────────────── */
+.problems-bg {
+  background: var(--periwinkle-deep);
+}
+.problem-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 20px;
+  margin-top: 52px;
+}
+.problem-card {
+  background: rgba(255,255,255,.06);
+  border: 1px solid rgba(255,255,255,.1);
+  border-radius: 16px;
+  padding: 28px;
+  transition: transform .2s, background .2s;
+  cursor: default;
+}
+.problem-card:hover {
+  background: rgba(255,255,255,.1);
+  transform: translateY(-3px);
+}
+.problem-icon {
+  font-size: 32px;
+  margin-bottom: 14px;
+  display: block;
+}
+.problem-title {
+  font-family: 'Source Serif 4', serif;
+  font-size: 19px;
+  font-weight: 600;
+  color: white;
+  margin-bottom: 8px;
+}
+.problem-text {
+  font-size: 14px;
+  color: rgba(255,255,255,.6);
+  line-height: 1.7;
+}
+.problem-tag {
+  display: inline-flex;
+  margin-top: 12px;
+  padding: 3px 10px;
+  border-radius: 20px;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: .4px;
+  background: rgba(255,163,1,.15);
+  color: var(--orange);
+}
+
+/* ── STATS ROW ──────────────────────── */
+.stats-row {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1px;
+  background: var(--border);
+  border-radius: 16px;
+  overflow: hidden;
+  margin: 52px 0;
+}
+.stat-block {
+  background: white;
+  padding: 32px 28px;
+  text-align: center;
+}
+.stat-num {
+  font-family: 'Source Serif 4', serif;
+  font-size: 44px;
+  font-weight: 700;
+  line-height: 1;
+  margin-bottom: 8px;
+}
+.stat-label {
+  font-size: 13px;
+  color: var(--soft);
+  line-height: 1.5;
+}
+
+/* ── FLOW DIAGRAM ───────────────────── */
+.flow-section { background: var(--offwhite); }
+.flow-container {
+  display: flex;
+  align-items: stretch;
+  gap: 0;
+  margin-top: 52px;
+  overflow-x: auto;
+  padding-bottom: 8px;
+}
+.flow-step {
+  flex: 1;
+  min-width: 160px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  position: relative;
+}
+.flow-step:not(:last-child)::after {
+  content: '';
+  position: absolute;
+  top: 36px;
+  right: -20px;
+  width: 40px;
+  height: 2px;
+  background: linear-gradient(90deg, var(--border), var(--orange));
+  z-index: 1;
+}
+.flow-circle {
+  width: 72px; height: 72px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 28px;
+  margin-bottom: 14px;
+  position: relative;
+  z-index: 2;
+  flex-shrink: 0;
+  transition: transform .2s;
+}
+.flow-step:hover .flow-circle { transform: scale(1.1); }
+.flow-label {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--ink);
+  margin-bottom: 5px;
+}
+.flow-sub {
+  font-size: 12px;
+  color: var(--soft);
+  line-height: 1.5;
+  max-width: 130px;
+}
+.flow-badge {
+  margin-top: 10px;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: .5px;
+  text-transform: uppercase;
+  padding: 3px 9px;
+  border-radius: 20px;
+}
+
+/* ── BEFORE / AFTER ─────────────────── */
+.ba-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2px;
+  border-radius: 20px;
+  overflow: hidden;
+  margin-top: 52px;
+}
+.ba-col {
+  padding: 40px 36px;
+}
+.ba-col.before { background: #F0F0F2; }
+.ba-col.after { background: var(--pine); }
+.ba-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 28px;
+}
+.ba-label {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: .8px;
+  text-transform: uppercase;
+}
+.ba-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 13px 0;
+  border-bottom: 1px solid rgba(0,0,0,.06);
+  font-size: 14px;
+  line-height: 1.6;
+}
+.ba-col.after .ba-item { border-bottom-color: rgba(255,255,255,.1); color: rgba(255,255,255,.85); }
+.ba-item:last-child { border-bottom: none; }
+.ba-icon { font-size: 18px; flex-shrink: 0; margin-top: 2px; }
+.ba-col.after .ba-label { color: var(--orange); }
+.ba-col.before .ba-label { color: var(--soft); }
+
+/* ── PILLARS ────────────────────────── */
+.pillars-bg { background: white; }
+.pillar-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 14px;
+  margin-top: 52px;
+}
+.pillar-card {
+  border-radius: 14px;
+  padding: 22px 20px;
+  border: 2px solid transparent;
+  cursor: pointer;
+  transition: all .2s;
+  position: relative;
+  overflow: hidden;
+}
+.pillar-card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  transition: opacity .2s;
+}
+.pillar-card:hover { transform: translateY(-3px); border-color: var(--orange); }
+.pillar-emoji { font-size: 32px; margin-bottom: 12px; }
+.pillar-name {
+  font-family: 'Source Serif 4', serif;
+  font-size: 16px;
+  font-weight: 600;
+  margin-bottom: 6px;
+}
+.pillar-desc {
+  font-size: 12px;
+  color: var(--soft);
+  line-height: 1.5;
+}
+
+/* ── SKILL CARDS ────────────────────── */
+.skill-explainer {
+  display: grid;
+  grid-template-columns: 1fr 1.2fr;
+  gap: 40px;
+  align-items: center;
+  margin-top: 52px;
+}
+.skill-text {}
+.skill-text p {
+  font-size: 15px;
+  color: var(--mid);
+  line-height: 1.8;
+  margin-bottom: 16px;
+  font-weight: 300;
+}
+.skill-text p strong { color: var(--ink); font-weight: 600; }
+.skill-cards-demo {
+  position: relative;
+}
+.skill-card-stack {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.skill-card {
+  background: white;
+  border: 1.5px solid var(--border);
+  border-radius: 12px;
+  padding: 16px 18px;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  transition: all .2s;
+  cursor: pointer;
+}
+.skill-card:hover { border-color: var(--pine); transform: translateX(4px); }
+.skill-card.foundation { border-color: var(--pine); background: var(--pine-light); }
+.skill-card-icon {
+  width: 40px; height: 40px;
+  border-radius: 10px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 18px;
+  flex-shrink: 0;
+}
+.skill-card-name { font-size: 14px; font-weight: 600; color: var(--ink); }
+.skill-card-meta { font-size: 12px; color: var(--soft); margin-top: 2px; }
+.skill-card-tag {
+  margin-left: auto;
+  font-size: 10.5px;
+  font-weight: 700;
+  padding: 3px 9px;
+  border-radius: 20px;
+  flex-shrink: 0;
+}
+.tag-cbt { background: #EEF1FE; color: #3050B0; }
+.tag-act { background: var(--sea-light); color: #1A7060; }
+.tag-dbt { background: var(--grape-light); color: var(--grape); }
+.tag-pmatch { background: var(--marigold-light); color: #8A5010; }
+.foundation-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 10px;
+  font-weight: 700;
+  color: var(--pine);
+  text-transform: uppercase;
+  letter-spacing: .5px;
+  margin-top: 3px;
+}
+
+/* ── AI SECTION ─────────────────────── */
+.ai-bg { background: linear-gradient(135deg, #EDF5F2 0%, #EEF1FE 100%); }
+.ai-features {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+  margin-top: 52px;
+}
+.ai-feature {
+  background: white;
+  border-radius: 16px;
+  padding: 28px;
+  border: 1px solid var(--border);
+  transition: transform .2s;
+}
+.ai-feature:hover { transform: translateY(-4px); }
+.ai-feature-icon {
+  width: 48px; height: 48px;
+  background: var(--pine-light);
+  border-radius: 12px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 22px;
+  margin-bottom: 16px;
+}
+.ai-feature-title {
+  font-family: 'Source Serif 4', serif;
+  font-size: 17px;
+  font-weight: 600;
+  margin-bottom: 8px;
+}
+.ai-feature-text {
+  font-size: 13.5px;
+  color: var(--mid);
+  line-height: 1.7;
+  font-weight: 300;
+}
+
+/* ── COACHING COMPETENCIES ──────────── */
+.competency-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  margin-top: 40px;
+}
+.competency-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  padding: 18px 20px;
+  background: white;
+  border-radius: 12px;
+  border: 1px solid var(--border);
+}
+.comp-icon {
+  width: 36px; height: 36px;
+  border-radius: 9px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 17px;
+  flex-shrink: 0;
+}
+.comp-title { font-size: 14px; font-weight: 600; color: var(--ink); margin-bottom: 3px; }
+.comp-text { font-size: 12.5px; color: var(--soft); line-height: 1.5; }
+
+/* ── PROGRESS BAR ───────────────────── */
+.progress-item {
+  margin-bottom: 18px;
+}
+.progress-label {
+  display: flex;
+  justify-content: space-between;
+  font-size: 13px;
+  font-weight: 500;
+  margin-bottom: 7px;
+  color: var(--ink);
+}
+.progress-track {
+  height: 10px;
+  background: var(--border);
+  border-radius: 10px;
+  overflow: hidden;
+}
+.progress-fill {
+  height: 100%;
+  border-radius: 10px;
+  width: 0;
+  transition: width 1.5s cubic-bezier(.22,.61,.36,1);
+}
+
+/* ── RESEARCH CALLOUT ───────────────── */
+.research-grid {
+  display: grid;
+  grid-template-columns: repeat(3,1fr);
+  gap: 16px;
+  margin-top: 40px;
+}
+.research-card {
+  background: white;
+  border-radius: 14px;
+  padding: 24px;
+  border-left: 4px solid var(--orange);
+}
+.research-quote {
+  font-family: 'Source Serif 4', serif;
+  font-size: 15px;
+  font-style: italic;
+  color: var(--ink);
+  line-height: 1.7;
+  margin-bottom: 12px;
+}
+.research-source {
+  font-size: 11.5px;
+  color: var(--soft);
+  font-weight: 500;
+}
+
+/* ── ROADMAP ────────────────────────── */
+.roadmap-bg { background: var(--pine); }
+.roadmap-timeline {
+  display: flex;
+  gap: 0;
+  margin-top: 52px;
+  position: relative;
+}
+.roadmap-timeline::before {
+  content: '';
+  position: absolute;
+  top: 36px;
+  left: 36px;
+  right: 36px;
+  height: 2px;
+  background: rgba(255,255,255,.15);
+}
+.roadmap-step {
+  flex: 1;
+  text-align: center;
+  padding: 0 12px;
+  position: relative;
+}
+.roadmap-dot {
+  width: 72px; height: 72px;
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  margin: 0 auto 16px;
+  font-size: 24px;
+  position: relative;
+  z-index: 2;
+  border: 3px solid rgba(255,255,255,.2);
+}
+.roadmap-dot.active {
+  border-color: var(--orange);
+  box-shadow: 0 0 0 6px rgba(255,163,1,.2);
+}
+.roadmap-phase {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: .8px;
+  text-transform: uppercase;
+  color: var(--orange);
+  margin-bottom: 6px;
+}
+.roadmap-title {
+  font-family: 'Source Serif 4', serif;
+  font-size: 16px;
+  font-weight: 600;
+  color: white;
+  margin-bottom: 8px;
+}
+.roadmap-items {
+  font-size: 12px;
+  color: rgba(255,255,255,.6);
+  line-height: 1.8;
+}
+
+/* ── FOOTER ─────────────────────────── */
+.footer {
+  background: var(--periwinkle-deep);
+  padding: 52px 40px;
+  text-align: center;
+}
+.footer-logo {
+  font-family: 'Source Serif 4', serif;
+  font-size: 28px;
+  font-weight: 600;
+  color: white;
+  margin-bottom: 8px;
+}
+.footer-tagline {
+  font-size: 14px;
+  color: rgba(255,255,255,.5);
+  margin-bottom: 28px;
+}
+.footer-contact {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: var(--orange);
+  color: var(--periwinkle-deep);
+  border-radius: 30px;
+  padding: 11px 24px;
+  font-size: 14px;
+  font-weight: 700;
+  text-decoration: none;
+}
+
+/* ── DIVIDER ────────────────────────── */
+.orange-divider {
+  height: 4px;
+  background: linear-gradient(90deg, var(--pine), var(--orange), var(--sea), var(--sun));
+}
+
+/* ── UTIL ───────────────────────────── */
+.text-orange { color: var(--orange); }
+.text-white { color: white; }
+.text-soft { color: var(--soft); }
+.mt-sm { margin-top: 16px; }
+.mt-md { margin-top: 32px; }
+
+@media (max-width: 768px) {
+  .stats-row { grid-template-columns: 1fr 1fr; }
+  .ba-grid { grid-template-columns: 1fr; }
+  .skill-explainer { grid-template-columns: 1fr; }
+  .ai-features { grid-template-columns: 1fr; }
+  .research-grid { grid-template-columns: 1fr; }
+  .roadmap-timeline { flex-direction: column; gap: 24px; }
+  .roadmap-timeline::before { display: none; }
+  .competency-grid { grid-template-columns: 1fr; }
+  .flow-step:not(:last-child)::after { display: none; }
+}
+</style>
+</head>
+<body>
+
+<!-- ═══ HERO ═══════════════════════════════════════ -->
+<section class="hero" id="top">
+  <div class="hero-bg">
+    <svg width="100%" height="100%" viewBox="0 0 1400 900" preserveAspectRatio="xMidYMid slice" style="position:absolute;inset:0">
+      <!-- sunburst top right -->
+      <g transform="translate(1300, 80)" opacity=".13">
+        <g stroke="#FFA301" stroke-width="3.5" fill="none">
+          <line x1="0" y1="-90" x2="0" y2="-72" />
+          <line x1="0" y1="-90" x2="0" y2="-72" transform="rotate(20)"/>
+          <line x1="0" y1="-90" x2="0" y2="-72" transform="rotate(40)"/>
+          <line x1="0" y1="-90" x2="0" y2="-72" transform="rotate(60)"/>
+          <line x1="0" y1="-90" x2="0" y2="-72" transform="rotate(80)"/>
+          <line x1="0" y1="-90" x2="0" y2="-72" transform="rotate(100)"/>
+          <line x1="0" y1="-90" x2="0" y2="-72" transform="rotate(120)"/>
+          <line x1="0" y1="-90" x2="0" y2="-72" transform="rotate(140)"/>
+          <line x1="0" y1="-90" x2="0" y2="-72" transform="rotate(160)"/>
+          <line x1="0" y1="-90" x2="0" y2="-72" transform="rotate(180)"/>
+          <line x1="0" y1="-90" x2="0" y2="-72" transform="rotate(200)"/>
+          <line x1="0" y1="-90" x2="0" y2="-72" transform="rotate(220)"/>
+          <line x1="0" y1="-90" x2="0" y2="-72" transform="rotate(240)"/>
+          <line x1="0" y1="-90" x2="0" y2="-72" transform="rotate(260)"/>
+          <line x1="0" y1="-90" x2="0" y2="-72" transform="rotate(280)"/>
+          <line x1="0" y1="-90" x2="0" y2="-72" transform="rotate(300)"/>
+          <line x1="0" y1="-90" x2="0" y2="-72" transform="rotate(320)"/>
+          <line x1="0" y1="-90" x2="0" y2="-72" transform="rotate(340)"/>
+          <circle r="62" stroke-width="2.5"/>
+        </g>
+      </g>
+      <!-- sunburst bottom left small -->
+      <g transform="translate(120, 780)" opacity=".1">
+        <g stroke="#FFE415" stroke-width="2.5" fill="none">
+          <line x1="0" y1="-55" x2="0" y2="-44" />
+          <line x1="0" y1="-55" x2="0" y2="-44" transform="rotate(30)"/>
+          <line x1="0" y1="-55" x2="0" y2="-44" transform="rotate(60)"/>
+          <line x1="0" y1="-55" x2="0" y2="-44" transform="rotate(90)"/>
+          <line x1="0" y1="-55" x2="0" y2="-44" transform="rotate(120)"/>
+          <line x1="0" y1="-55" x2="0" y2="-44" transform="rotate(150)"/>
+          <line x1="0" y1="-55" x2="0" y2="-44" transform="rotate(180)"/>
+          <line x1="0" y1="-55" x2="0" y2="-44" transform="rotate(210)"/>
+          <line x1="0" y1="-55" x2="0" y2="-44" transform="rotate(240)"/>
+          <line x1="0" y1="-55" x2="0" y2="-44" transform="rotate(270)"/>
+          <line x1="0" y1="-55" x2="0" y2="-44" transform="rotate(300)"/>
+          <line x1="0" y1="-55" x2="0" y2="-44" transform="rotate(330)"/>
+          <circle r="36" stroke-width="2"/>
+        </g>
+      </g>
+      <!-- orange blob -->
+      <circle cx="200" cy="200" r="180" fill="#FFA301" opacity=".05"/>
+      <circle cx="1100" cy="700" r="220" fill="#5CC8B4" opacity=".05"/>
+      <!-- reading character -->
+      <g transform="translate(1050, 420)" stroke="#E0EEF3" stroke-width="2.5" fill="none" stroke-linecap="round" stroke-linejoin="round" opacity=".25">
+        <circle cx="0" cy="0" r="35"/>
+        <path d="M-20,-10 Q0,-20 20,-10"/>
+        <ellipse cx="-10" cy="-4" rx="6" ry="7"/>
+        <ellipse cx="10" cy="-4" rx="6" ry="7"/>
+        <circle cx="-9" cy="-5" r="2.5" fill="#E0EEF3"/>
+        <circle cx="11" cy="-5" r="2.5" fill="#E0EEF3"/>
+        <path d="M-8,8 Q0,14 8,8"/>
+        <rect x="40" y="-30" width="70" height="44" rx="12" stroke-width="2"/>
+        <path d="M44,14 L40,26 L56,14" fill="none"/>
+        <line x1="52" y1="-10" x2="94" y2="-10" stroke-width="2"/>
+        <line x1="52" y1="-2" x2="94" y2="-2" stroke-width="2"/>
+        <line x1="52" y1="6" x2="80" y2="6" stroke-width="2"/>
+      </g>
+      <!-- sparks -->
+      <g transform="translate(350, 150)" stroke="#FFA301" stroke-width="2.5" fill="none" opacity=".3">
+        <line x1="0" y1="-12" x2="0" y2="12"/><line x1="-12" y1="0" x2="12" y2="0"/>
+        <line x1="-8" y1="-8" x2="8" y2="8"/><line x1="8" y1="-8" x2="-8" y2="8"/>
+      </g>
+      <g transform="translate(1200, 600)" stroke="#FFE415" stroke-width="2" fill="none" opacity=".25">
+        <line x1="0" y1="-9" x2="0" y2="9"/><line x1="-9" y1="0" x2="9" y2="0"/>
+        <line x1="-6" y1="-6" x2="6" y2="6"/><line x1="6" y1="-6" x2="-6" y2="6"/>
+      </g>
+      <!-- heart -->
+      <g transform="translate(280, 680)" fill="#FFA301" opacity=".2">
+        <path d="M0,-14 C0,-24 -18,-24 -18,-10 C-18,0 0,14 0,14 C0,14 18,0 18,-10 C18,-24 0,-24 0,-14 Z"/>
+      </g>
+      <!-- wavy bottom accent -->
+      <path d="M0,880 Q175,870 350,880 Q525,890 700,880 Q875,870 1050,880 Q1225,890 1400,880" stroke="#FFA301" stroke-width="3" fill="none" opacity=".15"/>
+    </svg>
+  </div>
+
+  <div class="hero-content fade-up">
+    <div class="hero-eyebrow">
+      <div class="hero-eyebrow-dot"></div>
+      Brightline · Unified Platform Initiative
+    </div>
+    <h1 class="hero-title">
+      Care that's <em>visible,</em><br>flexible, and measurable
+    </h1>
+    <p class="hero-subtitle fade-up-2">
+      A new care planning system for Brightline's coaching and clinical teams — designed to reduce friction, support evidence-based practice, and make progress visible to the families we serve.
+    </p>
+    <a href="#problem" class="hero-cta fade-up-3">
+      Explore the Initiative ↓
+    </a>
+  </div>
+  <div class="hero-scroll-hint">
+    <span>Scroll to explore</span>
+    <div class="scroll-arrow"></div>
+  </div>
+</section>
+
+<div class="orange-divider"></div>
+
+<!-- ═══ STICKY NAV ══════════════════════════════════ -->
+<nav class="sticky-nav" id="stickyNav">
+  <div class="nav-logo"><div class="nav-dot"></div> brightline</div>
+  <a href="#problem" class="nav-item active">The Problem</a>
+  <a href="#coaching" class="nav-item">Coaching Flow</a>
+  <a href="#solution" class="nav-item">The Solution</a>
+  <a href="#pillars" class="nav-item">Care Pillars</a>
+  <a href="#ai" class="nav-item">AI Layer</a>
+  <a href="#roadmap" class="nav-item">Roadmap</a>
+</nav>
+
+
+<!-- ═══ THE PROBLEM ═════════════════════════════════ -->
+<div class="problems-bg" id="problem">
+<div class="section" style="max-width:1100px;margin:0 auto">
+  <div class="section-eyebrow text-orange">
+    <div class="eyebrow-line" style="background:var(--orange)"></div>
+    Where We Are Today
+  </div>
+  <h2 class="section-title text-white">Five problems we need to solve</h2>
+  <p class="section-sub" style="color:rgba(255,255,255,.6)">
+    Our current care delivery system was built for a different era. These gaps affect quality, consistency, and outcomes across both coaching and clinical care.
+  </p>
+
+  <div class="problem-grid">
+    <div class="problem-card">
+      <span class="problem-icon">🔒</span>
+      <div class="problem-title">Rigid, Linear Care</div>
+      <div class="problem-text">Programs are fixed 8-session, 8-week blocks. When a family's needs shift mid-program — and they always do — there's no system-supported way to pivot. Coaches adapt informally, but the structure doesn't.</div>
+      <span class="problem-tag">Care Delivery</span>
+    </div>
+    <div class="problem-card">
+      <span class="problem-icon">🔁</span>
+      <div class="problem-title">Redundant Data Collection</div>
+      <div class="problem-text">Families complete an NPQ, PSC-17, and onboarding survey — then coaches re-ask the same questions in the Welcome Session. Intake data exists but doesn't flow forward into the care plan or session prep.</div>
+      <span class="problem-tag">Data & Workflow</span>
+    </div>
+    <div class="problem-card">
+      <span class="problem-icon">📊</span>
+      <div class="problem-title">Invisible Progress</div>
+      <div class="problem-text">Caregivers have almost no window into what's happening in care. They can't see what skills are being worked on, track progress, or use clinical language at home to reinforce what their child is learning.</div>
+      <span class="problem-tag">Member Experience</span>
+    </div>
+    <div class="problem-card">
+      <span class="problem-icon">🎲</span>
+      <div class="problem-title">Unmeasured Variance</div>
+      <div class="problem-text">Coaching quality varies significantly between providers. Our QA currently only monitors note completion and fidelity item checks — not what interventions were used, how goals progressed, or what actually drives outcomes.</div>
+      <span class="problem-tag">Quality & Research</span>
+    </div>
+    <div class="problem-card">
+      <span class="problem-icon">🏚️</span>
+      <div class="problem-title">Fragmented Systems</div>
+      <div class="problem-text">Coaches document in Healthie, assign exercises on our platform, use separate handout tools, and track goals informally. Nothing is unified — and the coaching and clinical sides of the business don't share infrastructure at all.</div>
+      <span class="problem-tag">Platform</span>
+    </div>
+    <div class="problem-card">
+      <span class="problem-icon">✋</span>
+      <div class="problem-title">Manual Care Planning</div>
+      <div class="problem-text">Coaches reference the Glossary of Evidence-Based Interventions by hand and build plans from memory. There's no intelligent assistance surfacing what works for a given presentation — knowledge lives in experienced heads, not the system.</div>
+      <span class="problem-tag">Efficiency</span>
+    </div>
+  </div>
+
+  <div class="stats-row">
+    <div class="stat-block">
+      <div class="stat-num text-orange">25</div>
+      <div class="stat-label">Programs condensed to<br>7 flexible Care Pillars</div>
+    </div>
+    <div class="stat-block">
+      <div class="stat-num" style="color:var(--pine)">0</div>
+      <div class="stat-label">Current caregiver visibility<br>into care plan content</div>
+    </div>
+    <div class="stat-block">
+      <div class="stat-num text-orange">2</div>
+      <div class="stat-label">Sides of the business<br>this system will serve</div>
+    </div>
+    <div class="stat-block">
+      <div class="stat-num" style="color:var(--pine)">∞</div>
+      <div class="stat-label">Variance we currently<br>can't track or measure</div>
+    </div>
+  </div>
+</div>
+</div>
+
+
+<!-- ═══ COACHING COMPETENCY CONTEXT ═════════════════ -->
+<div id="coaching" style="background:white">
+<div class="section">
+  <div class="section-eyebrow" style="color:var(--pine)">
+    <div class="eyebrow-line" style="background:var(--pine)"></div>
+    Understanding Behavioral Health Coaching
+  </div>
+  <h2 class="section-title">Coaching is a <em style="font-style:italic;color:var(--pine)">credentialed, evidence-based practice</em></h2>
+  <p class="section-sub">
+    Brightline coaches operate within a rigorous professional framework. NBC-HWC (National Board for Health & Wellness Coaching) and ICF standards shape how goals are set, how progress is tracked, and how coaches facilitate change. Our system must honor — not override — these competencies.
+  </p>
+
+  <div class="competency-grid">
+    <div class="competency-item">
+      <div class="comp-icon" style="background:var(--pine-light)">🤝</div>
+      <div>
+        <div class="comp-title">Collaborative Goal Setting</div>
+        <div class="comp-text">Per NBHWC standards, goals are co-created with the client and grounded in their values and readiness. IGAR goals are collaborative — set with family in Session 1, not prescribed. The system supports this by making goals visible and editable.</div>
+      </div>
+    </div>
+    <div class="competency-item">
+      <div class="comp-icon" style="background:var(--orange-light)">🧭</div>
+      <div>
+        <div class="comp-title">Client-Centered, Self-Directed Change</div>
+        <div class="comp-text">Coaching is not therapy — it's a partnership. The ICF defines coaching as "partnering with clients in a thought-provoking and creative process." Skill Cards must support coach facilitation, not replace clinical judgment or mandate prescribed sequences.</div>
+      </div>
+    </div>
+    <div class="competency-item">
+      <div class="comp-icon" style="background:var(--sea-light)">📈</div>
+      <div>
+        <div class="comp-title">Motivational Interviewing & Behavior Change</div>
+        <div class="comp-text">NBC-HWC competencies center MI, SDT (Self-Determination Theory), and positive psychology. Coaches build self-efficacy. The IGAR 1–7 scale tracks goal movement collaboratively each session — not clinician-rated, but family-reported progress.</div>
+      </div>
+    </div>
+    <div class="competency-item">
+      <div class="comp-icon" style="background:var(--grape-light)">🔬</div>
+      <div>
+        <div class="comp-title">Measurement-Based Practice</div>
+        <div class="comp-text">Research shows that tracking outcomes improves them. Currently we have no way to connect what interventions are being used with what outcomes are achieved. This initiative creates that data layer for the first time — informing coaching quality at scale.</div>
+      </div>
+    </div>
+    <div class="competency-item">
+      <div class="comp-icon" style="background:var(--marigold-light)">📋</div>
+      <div>
+        <div class="comp-title">Documentation in Healthie</div>
+        <div class="comp-text">Coaches currently use two note types (Welcome Session + Ongoing) and assign exercises and handouts through the platform. Post-session summaries exist but aren't standard practice. The new system integrates all of this into a single, purposeful flow.</div>
+      </div>
+    </div>
+    <div class="competency-item">
+      <div class="comp-icon" style="background:var(--pine-light)">🧩</div>
+      <div>
+        <div class="comp-title">Scope of Practice</div>
+        <div class="comp-text">Coaching is distinct from therapy. NBHWC scope does not include diagnosis or clinical treatment. Our system maintains this distinction — coaching Skill Cards draw from the GEBI (Glossary of Evidence-Based Interventions) within coaching scope, separate from clinical treatment plans.</div>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+
+
+<!-- ═══ BEFORE / AFTER ═══════════════════════════════ -->
+<div id="solution" style="background:var(--offwhite)">
+<div class="section">
+  <div class="section-eyebrow" style="color:var(--orange)">
+    <div class="eyebrow-line" style="background:var(--orange)"></div>
+    The Proposed Solution
+  </div>
+  <h2 class="section-title">From fragmented to unified</h2>
+  <p class="section-sub">The Unified Care Planning System replaces six disconnected problems with one coherent workflow — built for coaches and clinicians, usable across both sides of the business.</p>
+
+  <div class="ba-grid">
+    <div class="ba-col before">
+      <div class="ba-header">
+        <span style="font-size:22px">⚠</span>
+        <div>
+          <div class="ba-label">Today</div>
+          <div style="font-family:'Source Serif 4',serif;font-size:18px;font-weight:600;margin-top:2px">How it works now</div>
+        </div>
+      </div>
+      <div class="ba-item"><div class="ba-icon">❌</div><div>Fixed 8-session programs. No pivoting mid-care when needs change.</div></div>
+      <div class="ba-item"><div class="ba-icon">❌</div><div>Coaches re-collect intake data that already exists in the system.</div></div>
+      <div class="ba-item"><div class="ba-icon">❌</div><div>Care plans built by hand from a 35-page PDF glossary.</div></div>
+      <div class="ba-item"><div class="ba-icon">❌</div><div>No pre-session summary — coaches prep from scattered notes.</div></div>
+      <div class="ba-item"><div class="ba-icon">❌</div><div>Caregivers receive a goal but can't see the plan or track progress.</div></div>
+      <div class="ba-item"><div class="ba-icon">❌</div><div>QA measures note completion only — not care quality or outcomes.</div></div>
+      <div class="ba-item"><div class="ba-icon">❌</div><div>Coaching and clinical platforms are entirely separate.</div></div>
+    </div>
+    <div class="ba-col after">
+      <div class="ba-header">
+        <span style="font-size:22px">✦</span>
+        <div>
+          <div class="ba-label">Proposed</div>
+          <div style="font-family:'Source Serif 4',serif;font-size:18px;font-weight:600;margin-top:2px;color:white">How it will work</div>
+        </div>
+      </div>
+      <div class="ba-item"><div class="ba-icon">✅</div><div>Modular Skill Cards within 7 Care Pillars — flexible, sequenceable, pivotable.</div></div>
+      <div class="ba-item"><div class="ba-icon">✅</div><div>Intake data flows automatically into pre-session AI summary.</div></div>
+      <div class="ba-item"><div class="ba-icon">✅</div><div>AI-suggested care plans based on presenting concerns and assessment data.</div></div>
+      <div class="ba-item"><div class="ba-icon">✅</div><div>AI pre- and post-session summaries — human-reviewed, always.</div></div>
+      <div class="ba-item"><div class="ba-icon">✅</div><div>Member-facing care plan view: skills, goals, charts, and action steps.</div></div>
+      <div class="ba-item"><div class="ba-icon">✅</div><div>Measurement-based care tracked per session — tied to interventions used.</div></div>
+      <div class="ba-item"><div class="ba-icon">✅</div><div>One platform, shared infrastructure — coaching and clinical, unified.</div></div>
+    </div>
+  </div>
+</div>
+</div>
+
+
+<!-- ═══ CARE FLOW ═════════════════════════════════════ -->
+<div style="background:white">
+<div class="section">
+  <div class="section-eyebrow" style="color:var(--pine)">
+    <div class="eyebrow-line" style="background:var(--pine)"></div>
+    The New Care Journey
+  </div>
+  <h2 class="section-title">One connected flow, start to finish</h2>
+  <p class="section-sub">Data collected at onboarding doesn't disappear — it flows forward through every step of care, reducing redundancy and enabling smarter planning.</p>
+
+  <div class="flow-container">
+    <div class="flow-step">
+      <div class="flow-circle" style="background:var(--pine-light)">📋</div>
+      <div class="flow-label">Onboarding</div>
+      <div class="flow-sub">NPQ + PSC-17 + Caregiver Stress generates structured data</div>
+      <span class="flow-badge" style="background:var(--pine-light);color:var(--pine)">Data In</span>
+    </div>
+    <div class="flow-step">
+      <div class="flow-circle" style="background:var(--orange-light)">✦</div>
+      <div class="flow-label">AI Pre-Session</div>
+      <div class="flow-sub">Intake + prior session data → coach summary + focus areas</div>
+      <span class="flow-badge" style="background:var(--orange-light);color:#8A5010">AI Assist</span>
+    </div>
+    <div class="flow-step">
+      <div class="flow-circle" style="background:var(--sea-light)">🎯</div>
+      <div class="flow-label">Welcome Session</div>
+      <div class="flow-sub">Collaborative goals set (IGAR). Care plan drafted with AI suggestions.</div>
+      <span class="flow-badge" style="background:var(--sea-light);color:#1A7060">Human Decision</span>
+    </div>
+    <div class="flow-step">
+      <div class="flow-circle" style="background:var(--grape-light)">🧩</div>
+      <div class="flow-label">Ongoing Sessions</div>
+      <div class="flow-sub">Skill Cards added, sequenced, adjusted. IGAR tracked weekly.</div>
+      <span class="flow-badge" style="background:var(--grape-light);color:var(--grape)">Modular</span>
+    </div>
+    <div class="flow-step">
+      <div class="flow-circle" style="background:var(--marigold-light)">📊</div>
+      <div class="flow-label">Measurement</div>
+      <div class="flow-sub">GAD-7, PHQ-8, PSC-17 tracked per session. Connected to interventions.</div>
+      <span class="flow-badge" style="background:var(--marigold-light);color:#8A5010">MBC</span>
+    </div>
+    <div class="flow-step">
+      <div class="flow-circle" style="background:var(--sun-light)">👨‍👩‍👧</div>
+      <div class="flow-label">Family View</div>
+      <div class="flow-sub">Care plan published to family — skills, goals, progress charts.</div>
+      <span class="flow-badge" style="background:var(--sun-light);color:#7A6000">Visible</span>
+    </div>
+    <div class="flow-step">
+      <div class="flow-circle" style="background:var(--orange-light)">✦</div>
+      <div class="flow-label">Post-Session</div>
+      <div class="flow-sub">AI drafts session summary. Coach reviews, edits, saves.</div>
+      <span class="flow-badge" style="background:var(--orange-light);color:#8A5010">AI Assist</span>
+    </div>
+  </div>
+</div>
+</div>
+
+
+<!-- ═══ CARE PILLARS ══════════════════════════════════ -->
+<div class="pillars-bg" id="pillars">
+<div class="section">
+  <div class="section-eyebrow" style="color:var(--orange)">
+    <div class="eyebrow-line" style="background:var(--orange)"></div>
+    Care Architecture
+  </div>
+  <h2 class="section-title">7 Care Pillars → infinite Skill Cards</h2>
+  <p class="section-sub">25 fixed programs condensed into 7 flexible Care Pillars. Each pillar contains modular Skill Cards drawn from evidence-based interventions. Coaches build care plans by choosing and sequencing cards — AI suggests, human decides.</p>
+
+  <div class="pillar-grid">
+    <div class="pillar-card" style="background:#EDF5F2">
+      <div class="pillar-emoji">👨‍👩‍👧</div>
+      <div class="pillar-name">Parent Management Training</div>
+      <div class="pillar-desc">PCIT, MATCH-PMT, behavioral strategies for caregivers of young children</div>
+    </div>
+    <div class="pillar-card" style="background:#EEF1FE">
+      <div class="pillar-emoji">🌱</div>
+      <div class="pillar-name">Emotional Wellness</div>
+      <div class="pillar-desc">SEL, grief, stress, SUD prevention across development</div>
+    </div>
+    <div class="pillar-card" style="background:#FEF3E2">
+      <div class="pillar-emoji">🌊</div>
+      <div class="pillar-name">Mood Management</div>
+      <div class="pillar-desc">Anxiety, depression, anger — CBT, ACT, DBT-informed</div>
+    </div>
+    <div class="pillar-card" style="background:#FFFBD6">
+      <div class="pillar-emoji">🎯</div>
+      <div class="pillar-name">Attention & Organization</div>
+      <div class="pillar-desc">Focus, motivation, organizational skills training</div>
+    </div>
+    <div class="pillar-card" style="background:#EEE8F8">
+      <div class="pillar-emoji">⭐</div>
+      <div class="pillar-name">Identity, Self-Esteem & Confidence</div>
+      <div class="pillar-desc">LGBTQ+, BIPOC-affirming, self-worth, confidence building</div>
+    </div>
+    <div class="pillar-card" style="background:#E4F7F3">
+      <div class="pillar-emoji">🧩</div>
+      <div class="pillar-name">Autism Spectrum Support</div>
+      <div class="pillar-desc">ASD-specific caregiver coaching, early intervention</div>
+    </div>
+    <div class="pillar-card" style="background:var(--pine-light)">
+      <div class="pillar-emoji">🌙</div>
+      <div class="pillar-name">Sleep & Routine</div>
+      <div class="pillar-desc">Sleep hygiene, routine building for kids, teens, and families</div>
+    </div>
+  </div>
+
+  <!-- Skill card explainer -->
+  <div class="skill-explainer" style="margin-top:60px">
+    <div class="skill-text">
+      <div class="section-eyebrow" style="color:var(--pine);margin-bottom:16px">
+        <div class="eyebrow-line" style="background:var(--pine)"></div>
+        How Skill Cards Work
+      </div>
+      <h3 style="font-family:'Source Serif 4',serif;font-size:28px;font-weight:600;margin-bottom:20px;line-height:1.2">Built like Legos.<br>Grounded in evidence.</h3>
+      <p>Each Skill Card represents <strong>one core intervention</strong> drawn from the GEBI — CBT, ACT, DBT, MATCH/PMT, or PCIT. Some naturally overlap (the Cognitive Triangle informs almost everything), and that's by design.</p>
+      <p>Coaches select and sequence cards for each member. <strong>AI suggests based on presenting concerns and assessment data.</strong> The coach always makes the final call before anything reaches the family.</p>
+      <p>A foundation card like <strong>Cognitive Triangle</strong> gets introduced early and stays active throughout — new cards layer on top as the member builds skills. This mirrors how expert coaches actually work.</p>
+      <p><strong>Care Support modules</strong> (potty training, picky eating) are supplemental cards that sit alongside any pillar — not standalone programs.</p>
+    </div>
+    <div class="skill-cards-demo">
+      <div style="font-size:12px;font-weight:600;color:var(--soft);text-transform:uppercase;letter-spacing:.6px;margin-bottom:12px">Example: Mood Management Pillar</div>
+      <div class="skill-card-stack">
+        <div class="skill-card foundation">
+          <div class="skill-card-icon" style="background:var(--pine-light)">🔺</div>
+          <div>
+            <div class="skill-card-name">Cognitive Triangle</div>
+            <div class="skill-card-meta">
+              <span class="foundation-badge">⚓ Foundation — active all sessions</span>
+            </div>
+          </div>
+          <span class="skill-card-tag tag-cbt">CBT</span>
+        </div>
+        <div class="skill-card">
+          <div class="skill-card-icon" style="background:var(--sea-light)">🌿</div>
+          <div>
+            <div class="skill-card-name">Mindfulness & Grounding</div>
+            <div class="skill-card-meta">Session 1+ · Box breathing, 5-4-3-2-1</div>
+          </div>
+          <span class="skill-card-tag tag-act">ACT</span>
+        </div>
+        <div class="skill-card">
+          <div class="skill-card-icon" style="background:var(--pine-light)">🎯</div>
+          <div>
+            <div class="skill-card-name">Exposure & Desensitization</div>
+            <div class="skill-card-meta">Session 3+ · Fear ladder approach</div>
+          </div>
+          <span class="skill-card-tag tag-cbt">CBT</span>
+        </div>
+        <div class="skill-card" style="opacity:.6">
+          <div class="skill-card-icon" style="background:var(--marigold-light)">📅</div>
+          <div>
+            <div class="skill-card-name">Behavioral Activation</div>
+            <div class="skill-card-meta">Session 4+ · PHQ-8 trending up</div>
+          </div>
+          <span class="skill-card-tag tag-cbt">CBT</span>
+        </div>
+        <div class="skill-card" style="opacity:.4;border-style:dashed">
+          <div class="skill-card-icon" style="background:#F5F5F5">➕</div>
+          <div>
+            <div class="skill-card-name" style="color:var(--soft)">Add a skill card…</div>
+            <div class="skill-card-meta">AI-suggested or coach-selected</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+
+
+<!-- ═══ AI LAYER ══════════════════════════════════════ -->
+<div class="ai-bg" id="ai">
+<div class="section">
+  <div class="section-eyebrow" style="color:var(--pine)">
+    <div class="eyebrow-line" style="background:var(--pine)"></div>
+    The AI Ecosystem
+  </div>
+  <h2 class="section-title">AI that <em style="font-style:italic;color:var(--pine)">supports</em> the coach.<br>Never replaces them.</h2>
+  <p class="section-sub">
+    The AI layer in this system is an intelligent assistant — it surfaces information, drafts content, and tracks patterns. But the coach is always the decision-maker. This is the principle: <strong>AI suggests, human decides.</strong>
+  </p>
+
+  <div class="ai-features">
+    <div class="ai-feature">
+      <div class="ai-feature-icon">🌅</div>
+      <div class="ai-feature-title">Pre-Session Summary</div>
+      <div class="ai-feature-text">Before each session, AI reads intake data, assessment scores, prior notes, and goal progress to generate a concise briefing — clinical flags, suggested focus areas, and what changed since last time. Saves coaches 15+ minutes of prep.</div>
+    </div>
+    <div class="ai-feature">
+      <div class="ai-feature-icon">🧩</div>
+      <div class="ai-feature-title">Care Plan Suggestions</div>
+      <div class="ai-feature-text">After the Welcome Session, AI suggests a starting care plan based on presenting concerns, PSC-17 subscales, and the family's stated goals. The coach reviews, modifies, and approves. Nothing reaches the member without human sign-off.</div>
+    </div>
+    <div class="ai-feature">
+      <div class="ai-feature-icon">🌇</div>
+      <div class="ai-feature-title">Post-Session Summary</div>
+      <div class="ai-feature-text">After each session, AI drafts a summary of what was covered, what was assigned, and what the plan is for next session — pulling from session notes and care plan updates. Coach edits and saves. Optional, but opt-in encouraged.</div>
+    </div>
+    <div class="ai-feature">
+      <div class="ai-feature-icon">📈</div>
+      <div class="ai-feature-title">Pattern Recognition</div>
+      <div class="ai-feature-text">Over time, the system tracks which interventions correlate with goal progress for which presenting concerns. This generates insights for QA, supervision, and program development — the research layer we've never had before.</div>
+    </div>
+    <div class="ai-feature">
+      <div class="ai-feature-icon">🎯</div>
+      <div class="ai-feature-title">Goal Tracking & IGAR</div>
+      <div class="ai-feature-text">IGAR scores are logged weekly per goal. AI visualizes trajectory and flags when a goal is stalling. The 1–7 scale stays collaborative — coach and family update together each session.</div>
+    </div>
+    <div class="ai-feature">
+      <div class="ai-feature-icon">👨‍👩‍👧</div>
+      <div class="ai-feature-title">Family-Facing Translation</div>
+      <div class="ai-feature-text">Clinical care plan language gets automatically translated into simple, warm language for the family portal. "Exposure & Desensitization" becomes "Facing fears one step at a time." Progress charts show in plain English.</div>
+    </div>
+  </div>
+
+  <!-- Research backing -->
+  <div style="margin-top:52px">
+    <div style="font-family:'Source Serif 4',serif;font-size:22px;font-weight:600;margin-bottom:6px">Why this matters — the research</div>
+    <p style="font-size:14px;color:var(--mid);margin-bottom:0">Evidence supports every component of this system.</p>
+    <div class="research-grid">
+      <div class="research-card">
+        <div class="research-quote">"Clinicians who are very dissatisfied with their EHR are almost 3× more likely to leave compared to those who are very satisfied."</div>
+        <div class="research-source">KLAS Research via Core Solutions · EHR satisfaction & retention</div>
+      </div>
+      <div class="research-card">
+        <div class="research-quote">"EHRs missed key mental health functions such as treatment planning — workarounds were time-consuming and required extra work."</div>
+        <div class="research-source">PMC Scoping Review · EHR Impact in Mental Health Contexts</div>
+      </div>
+      <div class="research-card">
+        <div class="research-quote">"Standardized documentation of outcomes allows for continual remodeling to account for provider, staff, and patient feedback."</div>
+        <div class="research-source">Cincinnati Children's · Integrated Behavioral Health Prevention</div>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+
+
+<!-- ═══ MEMBER VISIBILITY ═════════════════════════════ -->
+<div style="background:var(--pine)">
+<div class="section">
+  <div class="section-eyebrow" style="color:var(--orange)">
+    <div class="eyebrow-line" style="background:var(--orange)"></div>
+    The CMO Priority
+  </div>
+  <h2 class="section-title text-white">Making care <em style="font-style:italic;color:var(--orange)">visible</em> drives completion</h2>
+  <p class="section-sub" style="color:rgba(255,255,255,.65)">
+    The biggest lever we have for improving care completion is giving families something to see. When caregivers understand the plan, trust the process, and can reinforce skills at home — members stay engaged.
+  </p>
+
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:32px;align-items:start">
+    <div>
+      <div style="font-size:13px;font-weight:600;color:var(--orange);text-transform:uppercase;letter-spacing:.7px;margin-bottom:20px">What families see today</div>
+      <div style="display:flex;flex-direction:column;gap:12px">
+        <div style="display:flex;align-items:center;gap:12px;background:rgba(255,255,255,.07);border-radius:10px;padding:14px 16px">
+          <span style="font-size:20px">😕</span>
+          <div style="font-size:13.5px;color:rgba(255,255,255,.7)">A goal they helped set in session 1</div>
+        </div>
+        <div style="display:flex;align-items:center;gap:12px;background:rgba(255,255,255,.07);border-radius:10px;padding:14px 16px">
+          <span style="font-size:20px">😕</span>
+          <div style="font-size:13.5px;color:rgba(255,255,255,.7)">Occasional handout after sessions</div>
+        </div>
+        <div style="display:flex;align-items:center;gap:12px;background:rgba(255,255,255,.07);border-radius:10px;padding:14px 16px">
+          <span style="font-size:20px">😕</span>
+          <div style="font-size:13.5px;color:rgba(255,255,255,.7)">No visibility into what skills are being taught</div>
+        </div>
+        <div style="display:flex;align-items:center;gap:12px;background:rgba(255,255,255,.07);border-radius:10px;padding:14px 16px">
+          <span style="font-size:20px">😕</span>
+          <div style="font-size:13.5px;color:rgba(255,255,255,.7)">No way to track progress between sessions</div>
+        </div>
+      </div>
+    </div>
+    <div>
+      <div style="font-size:13px;font-weight:600;color:var(--orange);text-transform:uppercase;letter-spacing:.7px;margin-bottom:20px">What families will see</div>
+      <div style="display:flex;flex-direction:column;gap:12px">
+        <div style="display:flex;align-items:center;gap:12px;background:rgba(255,163,1,.12);border:1px solid rgba(255,163,1,.2);border-radius:10px;padding:14px 16px">
+          <span style="font-size:20px">✨</span>
+          <div style="font-size:13.5px;color:rgba(255,255,255,.85)">Plain-language care plan with skills being worked on</div>
+        </div>
+        <div style="display:flex;align-items:center;gap:12px;background:rgba(255,163,1,.12);border:1px solid rgba(255,163,1,.2);border-radius:10px;padding:14px 16px">
+          <span style="font-size:20px">📊</span>
+          <div style="font-size:13.5px;color:rgba(255,255,255,.85)">Progress charts showing anxiety, mood, caregiver stress</div>
+        </div>
+        <div style="display:flex;align-items:center;gap:12px;background:rgba(255,163,1,.12);border:1px solid rgba(255,163,1,.2);border-radius:10px;padding:14px 16px">
+          <span style="font-size:20px">🎯</span>
+          <div style="font-size:13.5px;color:rgba(255,255,255,.85)">Weekly action steps and "what's next" clarity</div>
+        </div>
+        <div style="display:flex;align-items:center;gap:12px;background:rgba(255,163,1,.12);border:1px solid rgba(255,163,1,.2);border-radius:10px;padding:14px 16px">
+          <span style="font-size:20px">🌱</span>
+          <div style="font-size:13.5px;color:rgba(255,255,255,.85)">Skills library — what they've learned, what's coming</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+
+
+<!-- ═══ ROADMAP ═══════════════════════════════════════ -->
+<div class="roadmap-bg" id="roadmap" style="background:var(--periwinkle-deep)">
+<div class="section">
+  <div class="section-eyebrow" style="color:var(--orange)">
+    <div class="eyebrow-line" style="background:var(--orange)"></div>
+    Build Roadmap
+  </div>
+  <h2 class="section-title text-white">From mockup to <em style="font-style:italic;color:var(--orange)">production</em></h2>
+  <p class="section-sub" style="color:rgba(255,255,255,.6)">
+    The care plan system is Phase 1. This is how we get there — with coaching and clinical shipping together, and the AI ecosystem building in phases.
+  </p>
+
+  <div class="roadmap-timeline">
+    <div class="roadmap-step">
+      <div class="roadmap-dot active" style="background:rgba(255,163,1,.15)">📐</div>
+      <div class="roadmap-phase">Now</div>
+      <div class="roadmap-title">Design & Alignment</div>
+      <div class="roadmap-items">
+        Clinical mockup<br>
+        CMO + VP sign-off<br>
+        Scope definition<br>
+        EHR integration planning
+      </div>
+    </div>
+    <div class="roadmap-step">
+      <div class="roadmap-dot" style="background:rgba(255,255,255,.08)">🏗️</div>
+      <div class="roadmap-phase">Months 1–2</div>
+      <div class="roadmap-title">Core Build</div>
+      <div class="roadmap-items">
+        React app scaffold<br>
+        Care plan UI<br>
+        Skill card library<br>
+        Therapy goals tracker
+      </div>
+    </div>
+    <div class="roadmap-step">
+      <div class="roadmap-dot" style="background:rgba(255,255,255,.08)">🔗</div>
+      <div class="roadmap-phase">Months 2–4</div>
+      <div class="roadmap-title">EHR Integration</div>
+      <div class="roadmap-items">
+        API connections<br>
+        Healthie → Unified Platform<br>
+        Assessment data flow<br>
+        Pre-session AI summaries
+      </div>
+    </div>
+    <div class="roadmap-step">
+      <div class="roadmap-dot" style="background:rgba(255,255,255,.08)">👁️</div>
+      <div class="roadmap-phase">Months 4–5</div>
+      <div class="roadmap-title">Member Visibility</div>
+      <div class="roadmap-items">
+        Family-facing portal<br>
+        Progress charts<br>
+        Post-session summaries<br>
+        Action steps
+      </div>
+    </div>
+    <div class="roadmap-step">
+      <div class="roadmap-dot" style="background:rgba(255,255,255,.08)">🚀</div>
+      <div class="roadmap-phase">Month 6</div>
+      <div class="roadmap-title">Pilot Launch</div>
+      <div class="roadmap-items">
+        Coaching pilot<br>
+        Clinical pilot<br>
+        QA data layer live<br>
+        Feedback & iteration
+      </div>
+    </div>
+  </div>
+
+  <div style="margin-top:52px;background:rgba(255,163,1,.1);border:1px solid rgba(255,163,1,.2);border-radius:16px;padding:28px 32px">
+    <div style="font-family:'Source Serif 4',serif;font-size:20px;font-weight:600;color:white;margin-bottom:10px">The pilot within the pilot</div>
+    <p style="font-size:14px;color:rgba(255,255,255,.7);line-height:1.8;max-width:700px">
+      The CMO has proposed using <strong style="color:var(--orange)">Claude Code</strong> to build this system — with a non-engineer (the program developer) leading the UI build, supported by engineering for backend and API work. This is itself a proof-of-concept for what's possible in the Unified Platform era: domain experts building the tools their teams need, with AI as the implementation partner.
+    </p>
+  </div>
+</div>
+</div>
+
+
+<!-- ═══ FOOTER ════════════════════════════════════════ -->
+<div class="orange-divider"></div>
+<div class="footer">
+  <div class="footer-logo">brightline</div>
+  <div class="footer-tagline">Unified Care Planning · Clinical + Coaching · 2026</div>
+  <div style="font-size:13px;color:rgba(255,255,255,.4);margin-bottom:24px;max-width:500px;margin-left:auto;margin-right:auto;line-height:1.7">
+    Questions about this initiative? Reach out to the Care Innovation team to learn more about how this system will change the way Brightline delivers care.
+  </div>
+  <a href="mailto:care-innovation@hellobrightline.com" class="footer-contact">
+    📬 &nbsp;Get in touch
+  </a>
+</div>
+
+<script>
+// ── SCROLL-BASED ANIMATIONS ──────────────────────────
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.style.animation = 'fadeUp .7s ease both';
+      // trigger progress bars
+      entry.target.querySelectorAll('.progress-fill').forEach(bar => {
+        const w = bar.getAttribute('data-width');
+        if (w) bar.style.width = w;
+      });
+    }
+  });
+}, { threshold: 0.1 });
+
+document.querySelectorAll('.problem-card, .stat-block, .flow-step, .ba-col, .pillar-card, .skill-card, .ai-feature, .competency-item, .research-card, .roadmap-step').forEach(el => {
+  el.style.opacity = '0';
+  el.style.transform = 'translateY(20px)';
+  observer.observe(el);
+});
+
+// Stagger children in grids
+document.querySelectorAll('.problem-grid, .stats-row, .pillar-grid, .ai-features, .research-grid, .roadmap-timeline, .competency-grid').forEach(grid => {
+  const children = grid.children;
+  Array.from(children).forEach((child, i) => {
+    child.style.transitionDelay = (i * 0.08) + 's';
+  });
+});
+
+// ── NAV ACTIVE STATE ON SCROLL ───────────────────────
+const sections = document.querySelectorAll('section[id], div[id]');
+const navItems = document.querySelectorAll('.nav-item');
+
+const navObserver = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      navItems.forEach(item => item.classList.remove('active'));
+      const id = entry.target.getAttribute('id');
+      const match = document.querySelector(`.nav-item[href="#${id}"]`);
+      if (match) match.classList.add('active');
+    }
+  });
+}, { threshold: 0.3, rootMargin: '-100px 0px -50% 0px' });
+
+document.querySelectorAll('#problem,#coaching,#solution,#pillars,#ai,#roadmap').forEach(s => navObserver.observe(s));
+
+// ── SKILL CARD INTERACTIVE ───────────────────────────
+document.querySelectorAll('.skill-card:not(.foundation)').forEach(card => {
+  card.addEventListener('click', () => {
+    card.style.borderColor = card.style.borderColor === 'var(--pine)' ? 'var(--border)' : 'var(--pine)';
+    card.style.background = card.style.background ? '' : 'var(--pine-light)';
+  });
+});
+
+// ── PILLAR CARD HOVER DETAIL ─────────────────────────
+document.querySelectorAll('.pillar-card').forEach(card => {
+  card.addEventListener('mouseenter', () => {
+    card.style.boxShadow = '0 8px 24px rgba(0,78,104,.12)';
+  });
+  card.addEventListener('mouseleave', () => {
+    card.style.boxShadow = '';
+  });
+});
+</script>
+</body>
+</html>
